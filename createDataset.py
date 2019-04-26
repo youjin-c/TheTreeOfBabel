@@ -17,9 +17,11 @@ class MyOwnDataset(InMemoryDataset):
 
     def download(self):
         # Download to `self.raw_dir`.
+        pass
 
     def process(self):
         # Read data into huge `Data` list.
+        
         data_list = [...]
 
         if self.pre_filter is not None:
