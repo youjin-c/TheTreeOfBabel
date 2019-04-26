@@ -76,8 +76,8 @@ print('Test AUC: {:.4f}, Test AP: {:.4f}'.format(auc, ap))
 print(edge_index)
 z = model.encode(x, edge_index)
 ###x, edge_index = data.x.to(device), data.edge_index.to(device)###
-adj = model.decoder.forward(z,edge_index)
-print(adj.tolist())
+# adj = model.decoder.forward(z,edge_index)
+# print(adj.tolist())
 
 value = model.decode(z, edge_index)
 print(value.tolist())
