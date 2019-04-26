@@ -11,7 +11,8 @@ from torch_geometric.data import Data
 
 def refine(path):
     i = 0
-    for entry in sorted(os.scandir(path), key=lambda x: (x.is_dir(), x.name)):
+    arr = sorted(os.scandir(path), key=lambda x: (x.is_dir(), x.name))
+    for entry in arr:
         if entry.name.split('.')[0] .isdigit():
             with open(entry,'rt') as jsonfile:#, open(entry.name.split('.')[0]+'.edgelist','w') as jf:
                 jsons = json.load(jsonfile)
