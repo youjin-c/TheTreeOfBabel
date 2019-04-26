@@ -62,6 +62,8 @@ def test(pos_edge_index, neg_edge_index):
     model.eval()
     with torch.no_grad():
         z = model.encode(x, edge_index)
+        value = model.decode(z, edge_index)
+        print(value)
     return model.test(z, pos_edge_index, neg_edge_index)
 
 
@@ -73,11 +75,12 @@ def test(pos_edge_index, neg_edge_index):
 auc, ap = test(data.test_pos_edge_index, data.test_neg_edge_index)
 print('Test AUC: {:.4f}, Test AP: {:.4f}'.format(auc, ap))
 
+####
 print(edge_index)
 z = model.encode(x, edge_index)
 ###x, edge_index = data.x.to(device), data.edge_index.to(device)###
 # adj = model.decoder.forward(z,edge_index)
 # print(adj.tolist())
 
-value = model.decode(z, edge_index)
-print(value.tolist())
+# value = model.decode(z, edge_index)
+# print(value.tolist())
