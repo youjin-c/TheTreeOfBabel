@@ -18,8 +18,8 @@ def refine(path):
                 # print(jsons["edges"])
                 edge_index = torch.tensor(jsons['edges'])#,dtype=torch.long)
                 data = Data(edge_index=edge_index.t().contiguous())
-                print(i++,data)
-                
+                print(i,data)
+                i+=1
                 # for i, line in enumerate(fd):
                     # for s in line.split():  
                         # if not s.isdigit():
