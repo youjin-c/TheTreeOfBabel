@@ -6,13 +6,18 @@ from pathlib import Path
 import json
 from collections import Counter
 import array as arr
+import torch
+from torch_geometric.data import Data
 
 def refine(path):
     for entry in os.scandir(path):
         if entry.name.split('.')[0] .isdigit():
             with open(entry,'rt') as jsonfile:#, open(entry.name.split('.')[0]+'.edgelist','w') as jf:
-                data = json.load(jsonfile)
-                print(data["edges"])
+                jsons = json.load(jsonfile)
+                # print(data["edges"])
+                edge_index = torch.tensor(jsons['edges'],dtype=torch.long)
+                data = Data(edge_index=edge_index.t().contiguous())
+                print(data)
                 # for i, line in enumerate(fd):
                     # for s in line.split():  
                         # if not s.isdigit():
