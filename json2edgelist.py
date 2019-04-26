@@ -10,6 +10,7 @@ import torch
 from torch_geometric.data import Data
 
 def refine(path):
+    i = 0
     for entry in os.scandir(path):
         if entry.name.split('.')[0] .isdigit():
             with open(entry,'rt') as jsonfile:#, open(entry.name.split('.')[0]+'.edgelist','w') as jf:
@@ -17,7 +18,7 @@ def refine(path):
                 # print(jsons["edges"])
                 edge_index = torch.tensor(jsons['edges'])#,dtype=torch.long)
                 data = Data(edge_index=edge_index.t().contiguous())
-                print(entry.name.split('.')[0],data)
+                print(i++,data)
                 
                 # for i, line in enumerate(fd):
                     # for s in line.split():  
