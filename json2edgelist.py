@@ -17,7 +17,7 @@ def refine(path):
             with open(entry,'rt') as jsonfile:#, open(entry.name.split('.')[0]+'.edgelist','w') as jf:
                 jsons = json.load(jsonfile)
                 # print(jsons["edges"])
-                edge_index = torch.tensor(np.array(jsons['edges'])#,dtype=torch.long)
+                edge_index = torch.tensor(np.array(jsons['edges']))#,dtype=torch.long)
                 data = Data(edge_index=edge_index.t().contiguous())
                 print(entry.name.split('.')[0],data)
                 # i+=1
