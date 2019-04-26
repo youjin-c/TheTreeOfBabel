@@ -12,7 +12,7 @@ import numpy as np
 
 def refine(path):
     i = 0
-    for entry in os.scandir(path)):
+    for entry in os.scandir(path):
         if entry.name.split('.')[0] .isdigit():
             with open(entry,'rt') as jsonfile:#, open(entry.name.split('.')[0]+'.edgelist','w') as jf:
                 jsons = json.load(jsonfile)
