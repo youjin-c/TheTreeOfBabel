@@ -14,10 +14,10 @@ def refine(path):
         if entry.name.split('.')[0] .isdigit():
             with open(entry,'rt') as jsonfile:#, open(entry.name.split('.')[0]+'.edgelist','w') as jf:
                 jsons = json.load(jsonfile)
-                print(jsons["edges"])
-                # edge_index = torch.tensor(jsons['edges'],dtype=torch.long)
-                # data = Data(edge_index=edge_index.t().contiguous())
-                # print(entry.name.split('.')[0],data)
+                # print(jsons["edges"])
+                edge_index = torch.tensor(jsons['edges'])#,dtype=torch.long)
+                data = Data(edge_index=edge_index.t().contiguous())
+                print(entry.name.split('.')[0],data)
                 
                 # for i, line in enumerate(fd):
                     # for s in line.split():  
