@@ -3,13 +3,10 @@ import os
 from pathlib import Path
 import json
 import torch
-from torch_geometric.data import Data
+from torch_geometric.data import Data,InMemoryDataset,DataLoader
 
 
-from torch import Tensor as T
-from torch_geometric.nn import GAE, VGAE, ARGA, ARGVA
-
-dataset = []
+data_list = []
 
 def datalist(path):
     i = 0
@@ -21,16 +18,17 @@ def datalist(path):
                 edge_index = torch.tensor(jsons['edges'])#,dtype=torch.long)
                 data = Data(edge_index=edge_index.t().contiguous())
                 # print(entry.name.split('.')[0],data)
-                dataset.extend(data)
+                data_list.append(data)
 
 
 datalist(sys.argv[1])
+loader = DataLoader(data_list,batch_size = 32)
 # print(dataset)
-data = dataset[0]
-model = GAE(encoder=lambda x: x)
-model.reset_parameters()
-edge_index = data.edge_index
-print(data,edge_index)
+# data = dataset[0]
+# model = GAE(encoder=lambda x: x)
+# model.reset_parameters()
+# edge_index = data.edge_index
+# print(data,edge_index)
 
 # model = GAE(encoder=lambda x: x)
 # model.reset_parameters()
