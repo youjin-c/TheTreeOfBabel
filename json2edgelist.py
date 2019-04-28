@@ -22,8 +22,8 @@ def datalist(path):
     return data_list
 
 
-datalist(sys.argv[1])
-loader = DataLoader(data_list,batch_size = 32)
+# datalist(sys.argv[1])
+loader = DataLoader(datalist(sys.argv[1]),batch_size = 32)
 print(torch.load(loader))
 # print(dataset)
 # data = dataset[0]
