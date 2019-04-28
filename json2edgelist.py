@@ -21,10 +21,10 @@ def datalist(path):
                 data_list.append(data)
     return data_list
 
-
+data_list = datalist(sys.argv[1])
 # datalist(sys.argv[1])
-loader = DataLoader(datalist(sys.argv[1]),batch_size = 32)
-print(torch.load(loader))
+loader = DataLoader(data_list,batch_size = 32)
+
 # print(dataset)
 # data = dataset[0]
 # model = GAE(encoder=lambda x: x)
