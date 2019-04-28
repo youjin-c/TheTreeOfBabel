@@ -27,7 +27,9 @@ def datalist(path):
 datalist(sys.argv[1])
 # print(dataset)
 data = dataset[0]
-print(data)
+model = GAE(encoder=lambda x: x)
+model.reset_parameters()
+print(model.split_edges(data))
 
 # model = GAE(encoder=lambda x: x)
 # model.reset_parameters()
