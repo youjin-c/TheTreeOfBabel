@@ -10,7 +10,7 @@ import torch
 from torch_geometric.data import Data
 
 
-dataset = []
+datalist = []
 
 def dataset(path):
     i = 0
@@ -21,8 +21,8 @@ def dataset(path):
                 # print(jsons["edges"])
                 edge_index = torch.tensor(jsons['edges'])#,dtype=torch.long)
                 data = Data(edge_index=edge_index.t().contiguous())
-                print(entry.name.split('.')[0],data)
-                dataset.extend(data)
+                # print(entry.name.split('.')[0],data)
+                datalist.extend(data)
                 # i+=1
                 # for i, line in enumerate(fd):
                     # for s in line.split():  
@@ -43,3 +43,4 @@ def dataset(path):
                         # jf.write(line)
 
 dataset(sys.argv[1])
+print(datalist)
