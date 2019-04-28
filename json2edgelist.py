@@ -29,7 +29,8 @@ datalist(sys.argv[1])
 data = dataset[0]
 model = GAE(encoder=lambda x: x)
 model.reset_parameters()
-print(model.split_edges(data))
+edge_index = data.edge_index
+print(edge_index)
 
 # model = GAE(encoder=lambda x: x)
 # model.reset_parameters()
