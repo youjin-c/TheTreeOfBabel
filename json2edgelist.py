@@ -24,10 +24,10 @@ def datalist(path):
 data_list = datalist(sys.argv[1])
 print(data_list[0].edge_index)
 
-loader = DataLoader(data_list,batch_size = 32)
-for batch in loader:
-    print(batch)
-    print(batch.num_graphs)
+loader = DataLoader(data_list,batch_size = 32,shuffle=False)
+for data in loader: #batch,
+    print(data)
+    print(data.num_graphs)
 # print(loader.get(0))
 # print(dataset)
 # data = dataset[0]
