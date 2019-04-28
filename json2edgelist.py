@@ -1,18 +1,17 @@
-import glob
 import sys
-import re
 import os
 from pathlib import Path
 import json
-from collections import Counter
-import array as arr
 import torch
 from torch_geometric.data import Data
 
 
-datalist = []
+from torch import Tensor as T
+from torch_geometric.nn import GAE, VGAE, ARGA, ARGVA
 
-def dataset(path):
+dataset = []
+
+def datalist(path):
     i = 0
     for entry in sorted(os.scandir(path), key=lambda x: (x.is_dir(), x.name)):
         if entry.name.split('.')[0] .isdigit():
@@ -22,25 +21,53 @@ def dataset(path):
                 edge_index = torch.tensor(jsons['edges'])#,dtype=torch.long)
                 data = Data(edge_index=edge_index.t().contiguous())
                 # print(entry.name.split('.')[0],data)
-                datalist.extend(data)
-                # i+=1
-                # for i, line in enumerate(fd):
-                    # for s in line.split():  
-                        # if not s.isdigit():
-                            # print(entry.name.split('.')[0],i,':',line)
-                    #############cut off more than third column ######
-                    # if len(line.split())>2:
-                        # print(entry.name,i,':',line,re.findall(r"[\w\d']+", line))
-                    #    print(entry.name,i,':',line,line.split(' ')[0:2])
-                    #    jf.write(line.rsplit('\t',1)[0])
-                    ##################################################
-                        
-                    # if not re.match("^[\d\s]+$",line): #[^0-9] #^[\d\s]+$ :numbers and space
-                        # print(entry.name,i,':',line)
-                        # jf.write(line.replace("E","1000"))
-                    # else:
-                        # pass
-                        # jf.write(line)
+                dataset.extend(data)
 
-dataset(sys.argv[1])
-print(datalist)
+
+datalist(sys.argv[1])
+# print(dataset)
+data = dataset[0]
+print(data('edge_index'))
+
+# model = GAE(encoder=lambda x: x)
+# model.reset_parameters()
+
+
+def test_gae():
+    model = GAE(encoder=lambda x: x)
+    model.reset_parameters()
+
+    x = torch.Tensor([[1, -1], [1, 2], [2, 1]])
+    z = model.encode(x)
+    assert z.tolist() == x.tolist()
+
+    adj = model.decoder.forward_all(z)
+    assert adj.tolist() == torch.sigmoid(
+        torch.Tensor([[+2, -1, +1], [-1, +5, +4], [+1, +4, +5]])).tolist()
+    # print("adj",adj.tolist())
+
+    edge_index = torch.tensor([[0, 1], [1, 2]])
+    value = model.decode(z, edge_index)
+    assert value.tolist() == torch.sigmoid(torch.Tensor([-1, 4])).tolist()
+    # print("value",value.tolist())
+
+    edge_index = torch.tensor([[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+                               [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]])
+    data = Data(edge_index=edge_index)
+    data.num_nodes = edge_index.max().item() + 1
+    data = model.split_edges(data, val_ratio=0.2, test_ratio=0.3)
+
+    assert data.val_pos_edge_index.size() == (2, 2)
+    assert data.val_neg_edge_index.size() == (2, 2)
+    assert data.test_pos_edge_index.size() == (2, 3)
+    assert data.test_neg_edge_index.size() == (2, 3)
+    assert data.train_pos_edge_index.size() == (2, 5)
+    assert data.train_neg_adj_mask.size() == (11, 11)
+    assert data.train_neg_adj_mask.sum().item() == (11**2 - 11) / 2 - 4 - 6 - 5
+
+    z = torch.randn(11, 16)
+    loss = model.recon_loss(z, data.train_pos_edge_index)
+    assert loss.item() > 0
+
+    auc, ap = model.test(z, data.val_pos_edge_index, data.val_neg_edge_index)
+    assert auc >= 0 and auc <= 1 and ap >= 0 and ap <= 1
