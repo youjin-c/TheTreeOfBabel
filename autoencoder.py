@@ -74,3 +74,7 @@ for epoch in range(1, 201):
 
 auc, ap = test(data.test_pos_edge_index, data.test_neg_edge_index)
 print('Test AUC: {:.4f}, Test AP: {:.4f}'.format(auc, ap))
+
+z = model.encode(x,edge_index)
+value = model.decodee(z, edge_index)
+print(value.tolist()) #assert value.tolist() == torch.sigmoid(torch.Tensor([-1, 4])).tolist()

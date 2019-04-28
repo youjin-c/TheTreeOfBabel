@@ -9,7 +9,10 @@ import array as arr
 import torch
 from torch_geometric.data import Data
 
-def refine(path):
+
+dataset = []
+
+def dataset(path):
     i = 0
     for entry in sorted(os.scandir(path), key=lambda x: (x.is_dir(), x.name)):
         if entry.name.split('.')[0] .isdigit():
@@ -19,6 +22,7 @@ def refine(path):
                 edge_index = torch.tensor(jsons['edges'])#,dtype=torch.long)
                 data = Data(edge_index=edge_index.t().contiguous())
                 print(entry.name.split('.')[0],data)
+                dataset.extend(data)
                 # i+=1
                 # for i, line in enumerate(fd):
                     # for s in line.split():  
@@ -38,4 +42,4 @@ def refine(path):
                         # pass
                         # jf.write(line)
 
-refine(sys.argv[1])
+dataset(sys.argv[1])
