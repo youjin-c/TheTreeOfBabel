@@ -23,6 +23,7 @@ def datalist(path):
 
 datalist(sys.argv[1])
 loader = DataLoader(data_list,batch_size = 32)
+print(loader)
 # print(dataset)
 # data = dataset[0]
 # model = GAE(encoder=lambda x: x)
