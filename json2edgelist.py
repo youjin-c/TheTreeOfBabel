@@ -6,7 +6,7 @@ import json
 import torch
 from torch_geometric.data import Data,InMemoryDataset,DataLoader
 
-import argparse
+# import argparse
 import torch.nn.functional as F
 import torch_geometric.transforms as T
 from torch_geometric.nn import GCNConv, GAE, VGAE
@@ -26,9 +26,6 @@ def datalist(path):
 # datalist(sys.argv[1])
 data_list = datalist(sys.argv[1])
 # print(data_list[0].edge_index)
-
-
-
 
 loader = DataLoader(data_list,batch_size = 32,shuffle=False)
 # for data in loader: #batch,
