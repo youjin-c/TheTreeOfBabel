@@ -30,7 +30,7 @@ data = dataset[0]
 model = GAE(encoder=lambda x: x)
 model.reset_parameters()
 edge_index = data.edge_index
-print(edge_index)
+print(data,edge_index)
 
 # model = GAE(encoder=lambda x: x)
 # model.reset_parameters()
