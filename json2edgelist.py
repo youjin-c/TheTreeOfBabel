@@ -22,9 +22,13 @@ def datalist(path):
     return data_list
 
 data_list = datalist(sys.argv[1])
-# datalist(sys.argv[1])
+print(data_list[0].edge_index)
+
 loader = DataLoader(data_list,batch_size = 32)
-print(loader.get(0))
+for batch in loader:
+    print(batch)
+    print(batch.num_graphs)
+# print(loader.get(0))
 # print(dataset)
 # data = dataset[0]
 # model = GAE(encoder=lambda x: x)
