@@ -36,7 +36,7 @@ loader = DataLoader(data_list,batch_size = 32,shuffle=False)
 #     print(data.x)
 #     print(data.edge_index)
 
-data = loader[0]
+data = data_list[0]
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, default='GAE')
@@ -66,7 +66,8 @@ class Encoder(torch.nn.Module):
 
 channels = 16
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-model = kwargs[args.model](Encoder(loader.num_features, channels)).to(device)
+model = GAE(encoder=lambda x: x).to(device)
+# model = kwargs[args.model](Encoder(loader.num_features, channels)).to(device)
 data.train_mask = data.val_mask = data.test_mask = data.y = None
 data = model.split_edges(data)
 x, edge_index = data.x.to(device), data.edge_index.to(device)###
