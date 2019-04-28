@@ -39,7 +39,7 @@ model = GAE(encoder=lambda x: x)
 model.reset_parameters()
 for data in loader:
     z = model.encode(data.x)
-    adj = model.decoder.forward_all(z)
+    # adj = model.decoder.forward_all(z)
     value = model.decode(z, data.edge_index)
     print(value)
     # print(data)
