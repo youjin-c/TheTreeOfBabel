@@ -27,7 +27,7 @@ def datalist(path):
 datalist(sys.argv[1])
 # print(dataset)
 data = dataset[0]
-print(data('edge_index'))
+print(data)
 
 # model = GAE(encoder=lambda x: x)
 # model.reset_parameters()
