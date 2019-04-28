@@ -20,11 +20,12 @@ def datalist(path):
                 # data = Data(x=x, edge_index=edge_index.t().contiguous())# print(entry.name.split('.')[0],data)
                 # data_list.append(data)
     return data_list
-
+    
+datalist(sys.argv[1])
 # data_list = datalist(sys.argv[1])
 # print(data_list[0].edge_index)
 
-loader = DataLoader(data_list,batch_size = 32,shuffle=False)
+# loader = DataLoader(data_list,batch_size = 32,shuffle=False)
 # for data in loader: #batch,
 #     print(data)
 #     print(data.x)
