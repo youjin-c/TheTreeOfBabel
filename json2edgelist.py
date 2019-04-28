@@ -14,13 +14,14 @@ def datalist(path):
         if entry.name.split('.')[0] .isdigit():
             with open(entry,'rt') as jsonfile:#, open(entry.name.split('.')[0]+'.edgelist','w') as jf:
                 jsons = json.load(jsonfile)
-                print(jsons)
+                print(jsons['x'])
+                print(jsons['edge_index'])
                 # x = torch.tensor(jsons['x'])
                 # edge_index = torch.tensor(jsons['edge_index'])#,dtype=torch.long)
                 # data = Data(x=x, edge_index=edge_index.t().contiguous())# print(entry.name.split('.')[0],data)
                 # data_list.append(data)
     return data_list
-    
+
 datalist(sys.argv[1])
 # data_list = datalist(sys.argv[1])
 # print(data_list[0].edge_index)
