@@ -6,10 +6,10 @@ import torch
 from torch_geometric.data import Data,InMemoryDataset,DataLoader
 
 
-data_list = []
+
 
 def datalist(path):
-    i = 0
+    data_list = []
     for entry in sorted(os.scandir(path), key=lambda x: (x.is_dir(), x.name)):
         if entry.name.split('.')[0] .isdigit():
             with open(entry,'rt') as jsonfile:#, open(entry.name.split('.')[0]+'.edgelist','w') as jf:
@@ -19,11 +19,12 @@ def datalist(path):
                 data = Data(edge_index=edge_index.t().contiguous())
                 # print(entry.name.split('.')[0],data)
                 data_list.append(data)
+    return data_list
 
 
 datalist(sys.argv[1])
 loader = DataLoader(data_list,batch_size = 32)
-print(loader)
+print(torch.load(loader))
 # print(dataset)
 # data = dataset[0]
 # model = GAE(encoder=lambda x: x)
@@ -33,6 +34,38 @@ print(loader)
 
 # model = GAE(encoder=lambda x: x)
 # model.reset_parameters()
+
+# class MyOwnDataset(InMemoryDataset):
+#     def __init__(self, root, transform=None, pre_transform=None):
+#         super(MyOwnDataset, self).__init__(root, transform, pre_transform)
+#         self.data, self.slices = torch.load(self.processed_paths[0])
+
+#     @property
+#     def raw_file_names(self):
+#         return ['some_file_1', 'some_file_2', ...]
+
+#     @property
+#     def processed_file_names(self):
+#         return ['data.pt']
+
+#     def download(self):
+#         pass
+#         # Download to `self.raw_dir`.
+
+#     def process(self):
+#         # Read data into huge `Data` list.
+#         data_list = datalist(sys.argv[1])
+
+#         if self.pre_filter is not None:
+#             data_list [data for data in data_list if self.pre_filter(data)]
+
+#         if self.pre_transform is not None:
+#             data_list = [self.pre_transform(data) for data in data_list]
+
+#         data, slices = self.collate(data_list)
+#         torch.save((data, slices), self.processed_paths[0])
+
+
 
 
 def test_gae():
