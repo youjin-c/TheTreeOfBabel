@@ -17,7 +17,7 @@ def datalist(path):
         if entry.name.split('.')[0] .isdigit():
             with open(entry,'rt') as jsonfile:
                 jsons = json.load(jsonfile)
-                x = torch.tensor(jsons['x'], dtype=torch.float)
+                # x = torch.tensor(jsons['x'], dtype=torch.float)
                 edge_index = torch.tensor(jsons['edge_index'],dtype=torch.long)
                 data = Data(x=x, edge_index=edge_index)# print(entry.name.split('.')[0],data)
                 data_list.append(data)
@@ -26,7 +26,7 @@ def datalist(path):
 # datalist(sys.argv[1])
 data_list = datalist('./transpose_nodes')#sys.argv[1]
 # print(data_list[0].edge_index)
-
+print('data numof nodes',data.num_nodes)
 loader = DataLoader(data_list,batch_size = 741,shuffle=False)
 # for data in loader: #batch,
 #     print(data)
@@ -69,13 +69,13 @@ class Encoder(torch.nn.Module):
 
 print(data.edge_index)
 
-channels = 16
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-model = kwargs[args.model](Encoder(batch.num_features, channels)).to(device)
-data.train_mask = data.val_mask = data.test_mask = data.y = None
-# data = model.split_edges(data)
-x, edge_index = data.x.to(device), data.edge_index.to(device)###
-optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+# channels = 16
+# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# model = kwargs[args.model](Encoder(batch.num_features, channels)).to(device)
+# data.train_mask = data.val_mask = data.test_mask = data.y = None
+# # data = model.split_edges(data)
+# x, edge_index = data.x.to(device), data.edge_index.to(device)###
+# optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
 def train():
     model.train()
@@ -100,8 +100,8 @@ for epoch in range(1, 201):
     auc, ap = test(data.val_pos_edge_index, data.val_neg_edge_index)
     print('Epoch: {:03d}, AUC: {:.4f}, AP: {:.4f}'.format(epoch, auc, ap))
 
-auc, ap = test(data.test_pos_edge_index, data.test_neg_edge_index)
-print('Test AUC: {:.4f}, Test AP: {:.4f}'.format(auc, ap))
+# auc, ap = test(data.test_pos_edge_index, data.test_neg_edge_index)
+# print('Test AUC: {:.4f}, Test AP: {:.4f}'.format(auc, ap))
 
 
 
