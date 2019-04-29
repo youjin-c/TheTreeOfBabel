@@ -24,7 +24,7 @@ def datalist(path):
     return data_list
 
 # datalist(sys.argv[1])
-data_list = datalist('./dataset')#sys.argv[1]
+data_list = datalist('./transpose_nodes')#sys.argv[1]
 # print(data_list[0].edge_index)
 
 loader = DataLoader(data_list,batch_size = 741,shuffle=False)
@@ -32,9 +32,9 @@ loader = DataLoader(data_list,batch_size = 741,shuffle=False)
 #     print(data)
 #     print(data.x)
 #     print(data.edge_index)
-# for batch in loader:
-    # print(batch.num_features)
-    # print(batch.num_graphs)
+for batch in loader:
+    print(batch.num_features)
+    print(batch.num_graphs)
 
 data = data_list[0]
 data = Data(x=data.x, edge_index=data.edge_index)
