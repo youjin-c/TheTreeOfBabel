@@ -6,7 +6,7 @@ import json
 import torch
 from torch_geometric.data import Data,InMemoryDataset,DataLoader
 
-# import argparse
+import argparse
 import torch.nn.functional as F
 import torch_geometric.transforms as T
 from torch_geometric.nn import GCNConv, GAE, VGAE
@@ -24,7 +24,7 @@ def datalist(path):
     return data_list
 
 # datalist(sys.argv[1])
-data_list = datalist(sys.argv[1])
+data_list = datalist('dataset/')#sys.argv[1]
 # print(data_list[0].edge_index)
 
 loader = DataLoader(data_list,batch_size = 32,shuffle=False)
@@ -34,15 +34,18 @@ loader = DataLoader(data_list,batch_size = 32,shuffle=False)
 #     print(data.edge_index)
 
 data = data_list[0]
+data = Data(x=data.x, edge_index=data.edge_index.t().contiguous())
+print(data.num_features)
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--model', type=str, default='GAE')
-args = parser.parse_args()
-assert args.model in ['GAE', 'VGAE']
-kwargs = {'GAE': GAE, 'VGAE': VGAE}
+# parser = argparse.ArgumentParser()
+# parser.add_argument('--model', type=str, default='GAE')
+# args = parser.parse_args()
+# assert args.model in ['GAE', 'VGAE']
+# kwargs = {'GAE': GAE, 'VGAE': VGAE}
 
 
 class Encoder(torch.nn.Module):
+    # def __init__(self, in_channels, out_channels):
     def __init__(self, in_channels, out_channels):
         super(Encoder, self).__init__()
         self.conv1 = GCNConv(in_channels, 2 * out_channels, cached=True)
@@ -61,14 +64,14 @@ class Encoder(torch.nn.Module):
             return self.conv_mu(x, edge_index), self.conv_logvar(x, edge_index)
 
 
-channels = 16
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-model = GAE(encoder=lambda x: x).to(device)
-# model = kwargs[args.model](Encoder(loader.num_features, channels)).to(device)
-data.train_mask = data.val_mask = data.test_mask = data.y = None
-data = model.split_edges(data)
-x, edge_index = data.x.to(device), data.edge_index.to(device)###
-optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+# channels = 16
+# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+# model = GAE(encoder=lambda x: x).to(device)
+# # model = kwargs[args.model](Encoder(loader.num_features, channels)).to(device)
+# data.train_mask = data.val_mask = data.test_mask = data.y = None
+# data = model.split_edges(data)
+# x, edge_index = data.x.to(device), data.edge_index.to(device)###
+# optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
 
 def train():
@@ -91,13 +94,16 @@ def test(pos_edge_index, neg_edge_index):
     print(value)
 
 
-for epoch in range(1, 201):
-    train()
-    auc, ap = test(data.val_pos_edge_index, data.val_neg_edge_index)
-    print('Epoch: {:03d}, AUC: {:.4f}, AP: {:.4f}'.format(epoch, auc, ap))
+# for epoch in range(1, 201):
+#     train()
+#     auc, ap = test(data.val_pos_edge_index, data.val_neg_edge_index)
+#     print('Epoch: {:03d}, AUC: {:.4f}, AP: {:.4f}'.format(epoch, auc, ap))
 
-auc, ap = test(data.test_pos_edge_index, data.test_neg_edge_index)
-print('Test AUC: {:.4f}, Test AP: {:.4f}'.format(auc, ap))
+# auc, ap = test(data.test_pos_edge_index, data.test_neg_edge_index)
+# print('Test AUC: {:.4f}, Test AP: {:.4f}'.format(auc, ap))
+
+
+
 
 # z = model.encode(x,edge_index)
 # value = model.decodee(z, edge_index)
