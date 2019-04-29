@@ -19,7 +19,7 @@ def datalist(path):
                 jsons = json.load(jsonfile)
                 x = torch.tensor(jsons['x'])
                 edge_index = torch.tensor(jsons['edge_index'])#,dtype=torch.long)
-                data = Data(x=x, edge_index=edge_index)# print(entry.name.split('.')[0],data)
+                data = Data(edge_index=edge_index)# print(entry.name.split('.')[0],data)
                 data_list.append(data)
     return data_list
 
@@ -37,7 +37,7 @@ for batch in loader:
     print(batch.num_graphs)
 
 data = data_list[0]
-data = Data(x=data.x, edge_index=data.edge_index)
+data = Data(edge_index=data.edge_index)
 # print(data.num_features)
 print(data)
 
@@ -75,7 +75,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = kwargs[args.model](Encoder(batch.num_features, channels)).to(device)
 data.train_mask = data.val_mask = data.test_mask = data.y = None
 data = model.split_edges(data)
-x, edge_index = data.x.to(device), data.edge_index.to(device)###
+edge_index = data.edge_index.to(device)###
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
 def train():
