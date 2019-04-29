@@ -69,7 +69,7 @@ channels = 16
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = kwargs[args.model](Encoder(data.num_features, channels)).to(device)
 data.train_mask = data.val_mask = data.test_mask = data.y = None
-data = model.split_edges(data)
+# data = model.split_edges(data)
 x, edge_index = data.x.to(device), data.edge_index.to(device)###
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
@@ -89,9 +89,7 @@ def test(pos_edge_index, neg_edge_index):
     model.eval()
     with torch.no_grad():
         z = model.encode(x, edge_index)
-        value = model.decode(z, edge_index)
     return model.test(z, pos_edge_index, neg_edge_index)
-    print(value)
 
 
 for epoch in range(1, 201):
