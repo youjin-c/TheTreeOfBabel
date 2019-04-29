@@ -37,6 +37,7 @@ class Encoder(torch.nn.Module):
         elif args.model in ['VGAE']:
             return self.conv_mu(x, edge_index), self.conv_logvar(x, edge_index)
 
+print(data.edge_index)
 
 channels = 16
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
