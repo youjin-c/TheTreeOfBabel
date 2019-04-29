@@ -26,7 +26,7 @@ def datalist(path):
 
 data_list = datalist('./nestedFeatureNode/')
 # print(data_list[0].edge_index)
-data = data_list[0]
+data = data_list[30]
 # print(data)
 
 
@@ -98,7 +98,7 @@ def test(pos_edge_index, neg_edge_index):
     return model.test(z, pos_edge_index, neg_edge_index)
 
 
-for epoch in range(1, 201):
+for epoch in range(1, 101):
     train()
     auc, ap = test(data.val_pos_edge_index, data.val_neg_edge_index)
     print('Epoch: {:03d}, AUC: {:.4f}, AP: {:.4f}'.format(epoch, auc, ap))
