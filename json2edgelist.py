@@ -28,13 +28,14 @@ data_list = datalist('./dataset')#sys.argv[1]
 # print(data_list[0].edge_index)
 print(len(data_list))
 
-loader = DataLoader(data_list,batch_size = 32,shuffle=False)
+loader = DataLoader(data_list,batch_size = 741,shuffle=False)
 # for data in loader: #batch,
 #     print(data)
 #     print(data.x)
 #     print(data.edge_index)
 for batch in loader:
     print(batch.num_features)
+    print(batch.num_graphs)
 
 data = data_list[0]
 data = Data(x=data.x, edge_index=data.edge_index.t().contiguous())
