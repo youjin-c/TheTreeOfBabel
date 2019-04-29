@@ -29,8 +29,6 @@ data_list = datalist('./nestedFeatureNode/')
 data = data_list[0]
 print(data)
 
-# print('max x data:',torch.max(data.x))
-
 
 loader = DataLoader(data_list,batch_size = 741,shuffle=False)
 # for data in loader: #batch,
@@ -74,13 +72,13 @@ class Encoder(torch.nn.Module):
 
 print(data.edge_index)
 
-# channels = 16
-# device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-# model = kwargs[args.model](Encoder(batch.num_features, channels)).to(device)
-# data.train_mask = data.val_mask = data.test_mask = data.y = None
-# # data = model.split_edges(data)
-# x, edge_index = data.x.to(device), data.edge_index.to(device)###
-# optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+channels = 16
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model = kwargs[args.model](Encoder(batch.num_features, channels)).to(device)
+data.train_mask = data.val_mask = data.test_mask = data.y = None
+data = model.split_edges(data)
+x, edge_index = data.x.to(device), data.edge_index.to(device)###
+optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
 def train():
     model.train()
@@ -100,10 +98,10 @@ def test(pos_edge_index, neg_edge_index):
     return model.test(z, pos_edge_index, neg_edge_index)
 
 
-for epoch in range(1, 201):
-    train()
-    auc, ap = test(data.val_pos_edge_index, data.val_neg_edge_index)
-    print('Epoch: {:03d}, AUC: {:.4f}, AP: {:.4f}'.format(epoch, auc, ap))
+# for epoch in range(1, 201):
+#     train()
+#     auc, ap = test(data.val_pos_edge_index, data.val_neg_edge_index)
+#     print('Epoch: {:03d}, AUC: {:.4f}, AP: {:.4f}'.format(epoch, auc, ap))
 
 # auc, ap = test(data.test_pos_edge_index, data.test_neg_edge_index)
 # print('Test AUC: {:.4f}, Test AP: {:.4f}'.format(auc, ap))
