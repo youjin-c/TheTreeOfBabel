@@ -18,7 +18,7 @@ def datalist(path):
             with open(entry,'rt') as jsonfile:
                 jsons = json.load(jsonfile)
                 x = torch.tensor(jsons['x'])
-                edge_index = torch.tensor(jsons['edge_index']).t()#,dtype=torch.long)
+                edge_index = torch.tensor(jsons['edge_index']).t().contiguous()#,dtype=torch.long)
                 data = Data(x=x, edge_index=edge_index)# print(entry.name.split('.')[0],data)
                 data_list.append(data)
     return data_list
@@ -39,6 +39,7 @@ for batch in loader:
 data = data_list[0]
 data = Data(x=data.x, edge_index=data.edge_index)
 # print(data.num_features)
+print(data)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, default='GAE')
