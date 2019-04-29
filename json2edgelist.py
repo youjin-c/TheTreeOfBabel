@@ -24,7 +24,7 @@ def datalist(path):
     return data_list
 
 
-data_list = datalist('./nodeFeature')
+data_list = datalist('./nestedFeatureNode/')
 # print(data_list[0].edge_index)
 data = data_list[0]
 print(data)
