@@ -16,11 +16,8 @@ def datalist(path):
     for entry in sorted(os.scandir(path), key=lambda x: (x.is_dir(), x.name)):
         if entry.name.split('.')[0] .isdigit():
             with open(entry,'rt') as jsonfile:
-                print(entry)
                 jsons = json.load(jsonfile)
                 x = torch.tensor(jsons['x'], dtype=torch.float)
-                # print(x)
-                print(int(torch.max(x).item()) )
                 edge_index = torch.tensor(jsons['edge_index'],dtype=torch.long)
                 data = Data(x=x, edge_index=edge_index)# print(entry.name.split('.')[0],data)
                 data_list.append(data)
@@ -30,7 +27,7 @@ def datalist(path):
 data_list = datalist('./nodeFeature')
 # print(data_list[0].edge_index)
 data = data_list[0]
-print('data numof nodes',data.num_nodes)
+print(data)
 
 # print('max x data:',torch.max(data.x))
 
