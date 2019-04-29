@@ -18,7 +18,7 @@ def datalist(path):
             with open(entry,'rt') as jsonfile:
                 jsons = json.load(jsonfile)
                 x = torch.tensor(jsons['x'])
-                edge_index = torch.tensor(jsons['edge_index']).t().contiguous()#,dtype=torch.long)
+                edge_index = torch.tensor(jsons['edge_index']).t()#,dtype=torch.long)
                 data = Data(x=x, edge_index=edge_index)# print(entry.name.split('.')[0],data)
                 data_list.append(data)
     return data_list
@@ -26,7 +26,6 @@ def datalist(path):
 # datalist(sys.argv[1])
 data_list = datalist('./dataset')#sys.argv[1]
 # print(data_list[0].edge_index)
-print(len(data_list))
 
 loader = DataLoader(data_list,batch_size = 741,shuffle=False)
 # for data in loader: #batch,
