@@ -26,8 +26,8 @@ def datalist(path):
                 data_list.append(data)
     return data_list
 
-# datalist(sys.argv[1])
-data_list = datalist('./transpose_nodes')#sys.argv[1]
+
+data_list = datalist('./nodeFeature')
 # print(data_list[0].edge_index)
 data = data_list[0]
 print('data numof nodes',data.num_nodes)
