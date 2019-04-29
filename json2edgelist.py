@@ -26,6 +26,7 @@ def datalist(path):
 # datalist(sys.argv[1])
 data_list = datalist('./dataset')#sys.argv[1]
 # print(data_list[0].edge_index)
+print(len(data_list))
 
 loader = DataLoader(data_list,batch_size = 32,shuffle=False)
 # for data in loader: #batch,
