@@ -24,7 +24,7 @@ def datalist(path):
     return data_list
 
 # datalist(sys.argv[1])
-data_list = datalist('/dataset')#sys.argv[1]
+data_list = datalist('./dataset')#sys.argv[1]
 # print(data_list[0].edge_index)
 
 loader = DataLoader(data_list,batch_size = 32,shuffle=False)
@@ -39,6 +39,7 @@ data = Data(x=data.x, edge_index=data.edge_index.t().contiguous())
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, default='GAE')
+parser.add_argument('--input', type=str, default='dataset/')
 args = parser.parse_args()
 assert args.model in ['GAE', 'VGAE']
 kwargs = {'GAE': GAE, 'VGAE': VGAE}
