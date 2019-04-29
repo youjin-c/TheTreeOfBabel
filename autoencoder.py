@@ -38,6 +38,7 @@ class Encoder(torch.nn.Module):
             return self.conv_mu(x, edge_index), self.conv_logvar(x, edge_index)
 
 print(data.edge_index)
+print(data)
 
 channels = 16
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
