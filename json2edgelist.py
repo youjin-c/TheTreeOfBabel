@@ -27,7 +27,7 @@ def datalist(path):
 data_list = datalist('./nestedFeatureNode/')
 # print(data_list[0].edge_index)
 data = data_list[0]
-print(data)
+# print(data)
 
 
 loader = DataLoader(data_list,batch_size = 741,shuffle=False)
@@ -70,7 +70,7 @@ class Encoder(torch.nn.Module):
         elif args.model in ['VGAE']:
             return self.conv_mu(x, edge_index), self.conv_logvar(x, edge_index)
 
-print(data.edge_index)
+# print(data.edge_index)
 
 channels = 16
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -98,13 +98,13 @@ def test(pos_edge_index, neg_edge_index):
     return model.test(z, pos_edge_index, neg_edge_index)
 
 
-# for epoch in range(1, 201):
-#     train()
-#     auc, ap = test(data.val_pos_edge_index, data.val_neg_edge_index)
-#     print('Epoch: {:03d}, AUC: {:.4f}, AP: {:.4f}'.format(epoch, auc, ap))
+for epoch in range(1, 201):
+    train()
+    auc, ap = test(data.val_pos_edge_index, data.val_neg_edge_index)
+    print('Epoch: {:03d}, AUC: {:.4f}, AP: {:.4f}'.format(epoch, auc, ap))
 
-# auc, ap = test(data.test_pos_edge_index, data.test_neg_edge_index)
-# print('Test AUC: {:.4f}, Test AP: {:.4f}'.format(auc, ap))
+auc, ap = test(data.test_pos_edge_index, data.test_neg_edge_index)
+print('Test AUC: {:.4f}, Test AP: {:.4f}'.format(auc, ap))
 
 
 
