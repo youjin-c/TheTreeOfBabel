@@ -38,7 +38,7 @@ for batch in loader:
     print(batch.num_graphs)
 
 data = data_list[0]
-data = Data(x=data.x, edge_index=data.edge_index.t().contiguous())
+data = Data(x=data.x, edge_index=data.edge_index
 # print(data.num_features)
 
 parser = argparse.ArgumentParser()
