@@ -28,6 +28,10 @@ data_list = datalist('./transpose_nodes')#sys.argv[1]
 # print(data_list[0].edge_index)
 data = data_list[0]
 print('data numof nodes',data.num_nodes)
+
+print(data)
+
+
 loader = DataLoader(data_list,batch_size = 741,shuffle=False)
 # for data in loader: #batch,
 #     print(data)
@@ -40,7 +44,7 @@ for batch in loader:
 
 data = Data(x=data.x, edge_index=data.edge_index)
 # print(data.num_features)
-print(data)
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, default='GAE')
