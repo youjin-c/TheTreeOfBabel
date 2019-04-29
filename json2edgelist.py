@@ -110,7 +110,7 @@ print('Test AUC: {:.4f}, Test AP: {:.4f}'.format(auc, ap))
 
 
 z = model.encode(x,edge_index)
-value = model.decodee(z, edge_index)
+value = model.decode(z, edge_index)
 print(value.tolist()) #assert value.tolist() == torch.sigmoid(torch.Tensor([-1, 4])).tolist()
 
 
