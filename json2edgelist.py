@@ -18,6 +18,7 @@ def datalist(path):
             with open(entry,'rt') as jsonfile:
                 jsons = json.load(jsonfile)
                 x = torch.tensor(jsons['x'], dtype=torch.float)
+                print(torch.max(x))
                 edge_index = torch.tensor(jsons['edge_index'],dtype=torch.long)
                 data = Data( edge_index=edge_index)# print(entry.name.split('.')[0],data)
                 data_list.append(data)
@@ -29,7 +30,7 @@ data_list = datalist('./transpose_nodes')#sys.argv[1]
 data = data_list[0]
 print('data numof nodes',data.num_nodes)
 
-print('max x data:',torch.max(data.x))
+# print('max x data:',torch.max(data.x))
 
 
 loader = DataLoader(data_list,batch_size = 741,shuffle=False)
