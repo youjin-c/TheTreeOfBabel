@@ -67,7 +67,7 @@ class Encoder(torch.nn.Module):
 
 channels = 16
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-model = kwargs[args.model](Encoder(loader.num_features, channels)).to(device)
+model = kwargs[args.model](Encoder(data.num_features, channels)).to(device)
 data.train_mask = data.val_mask = data.test_mask = data.y = None
 data = model.split_edges(data)
 x, edge_index = data.x.to(device), data.edge_index.to(device)###
