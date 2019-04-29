@@ -29,7 +29,7 @@ data_list = datalist('./transpose_nodes')#sys.argv[1]
 data = data_list[0]
 print('data numof nodes',data.num_nodes)
 
-print(data)
+print('max x data:',max(data.x))
 
 
 loader = DataLoader(data_list,batch_size = 741,shuffle=False)
