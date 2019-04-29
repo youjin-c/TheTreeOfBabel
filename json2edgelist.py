@@ -69,7 +69,7 @@ channels = 16
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = kwargs[args.model](Encoder(data.num_features, channels)).to(device)
 data.train_mask = data.val_mask = data.test_mask = data.y = None
-# data = model.split_edges(data)
+data = model.split_edges(data)
 x, edge_index = data.x.to(device), data.edge_index.to(device)###
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
