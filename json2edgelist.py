@@ -18,8 +18,7 @@ def datalist(path):
             with open(entry,'rt') as jsonfile:
                 jsons = json.load(jsonfile)
                 x = torch.tensor(jsons['x'], dtype=torch.float)
-                values, indices=torch.max(x,0)
-                print(values, indices)
+                print(torch.max(x).item())
                 edge_index = torch.tensor(jsons['edge_index'],dtype=torch.long)
                 data = Data( edge_index=edge_index)# print(entry.name.split('.')[0],data)
                 data_list.append(data)
