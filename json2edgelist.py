@@ -121,7 +121,7 @@ for i, prob in enumerate(value):
     # print(i, prob)
     pass
 
-with open('categorized/'+filename_list[0],'rt') as file:
+with open('categorized/basic/'+filename_list[0],'rt') as file:
     jsons = json.load(file)
     for i, prob in enumerate(value):
         print(i, prob, jsons['edge_index'][i])
