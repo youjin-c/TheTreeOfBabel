@@ -120,7 +120,7 @@ z = model.encode(x,edge_index)
 value = model.decode(z, edge_index)
 value_list= value.tolist()
 # print(value.tolist()) #assert value.tolist() == torch.sigmoid(torch.Tensor([-1, 4])).tolist()
-print("z",z,"value",value)
+print("z",z,"len Z",len(z),"value",value)
 for i, prob in enumerate(value):
     # print(i, prob)
     pass
