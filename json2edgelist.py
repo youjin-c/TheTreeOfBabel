@@ -11,9 +11,11 @@ import torch.nn.functional as F
 import torch_geometric.transforms as T
 from torch_geometric.nn import GCNConv, GAE, VGAE
 
-def datalist(path):
+
+def datalist(pathTorch):
     data_list = []
-    for entry in sorted(os.scandir(path), key=lambda x: (x.is_dir(), x.name)):
+    filename_list = []
+    for entry in sorted(os.scandir(pathTorch), key=lambda x: (x.is_dir(), x.name)):
         if entry.name.split('.')[0] .isdigit():
             with open(entry,'rt') as jsonfile:
                 jsons = json.load(jsonfile)
@@ -21,11 +23,12 @@ def datalist(path):
                 edge_index = torch.tensor(jsons['edge_index'],dtype=torch.long)
                 data = Data(x=x, edge_index=edge_index)# print(entry.name.split('.')[0],data)
                 data_list.append(data)
-    return data_list
+                filename_list.append(entry.name)
+    return data_list,filename_list
 
 path = './datasetTorch/basic/'
-data_list = datalist(path)
-print("datalen",len(data_list),"filename",sorted(os.scandir(path))[0].name)
+data_list,filename_list = datalist(path)
+print("datalen",len(data_list),"filename",filename_list)
 # print(data_list[0].edge_index)
 data = data_list[0]
 # print(data)
