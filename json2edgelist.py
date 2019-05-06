@@ -26,7 +26,7 @@ def datalist(path):
 
 data_list = datalist('./categorized/basic')
 # print(data_list[0].edge_index)
-data = data_list[30]
+data = data_list[0]
 # print(data)
 
 
