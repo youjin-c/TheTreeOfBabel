@@ -25,6 +25,7 @@ def datalist(path):
 
 
 data_list = datalist('./datasetTorch/basic/')
+print("datalen",len(data_list))
 # print(data_list[0].edge_index)
 data = data_list[0]
 # print(data)
@@ -101,10 +102,10 @@ def test(pos_edge_index, neg_edge_index):
 for epoch in range(1, 101):
     train()
     auc, ap = test(data.val_pos_edge_index, data.val_neg_edge_index)
-    print('Epoch: {:03d}, AUC: {:.4f}, AP: {:.4f}'.format(epoch, auc, ap))
+    # print('Epoch: {:03d}, AUC: {:.4f}, AP: {:.4f}'.format(epoch, auc, ap))
 
 auc, ap = test(data.test_pos_edge_index, data.test_neg_edge_index)
-print('Test AUC: {:.4f}, Test AP: {:.4f}'.format(auc, ap))
+# print('Test AUC: {:.4f}, Test AP: {:.4f}'.format(auc, ap))
 
 
 
@@ -113,7 +114,7 @@ z = model.encode(x,edge_index)
 value = model.decode(z, edge_index).tolist()
 # print(value.tolist()) #assert value.tolist() == torch.sigmoid(torch.Tensor([-1, 4])).tolist()
 for i, prob in enumerate(value):
-    print(i, prob)
+    # print(i, prob)
 
 #######TESTAUTOENCODERFILE####################
 # data = dataset[0]
