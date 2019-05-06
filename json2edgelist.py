@@ -123,8 +123,9 @@ for i, prob in enumerate(value):
 
 with open('categorized/basic/'+filename_list[0],'rt') as file:
     jsons = json.load(file)
+    print(len(jsons['edge_index']),len(value))
     for i, prob in enumerate(value):
-        print(i, prob, jsons['edge_index'][i])
+        # print(i, prob, jsons['edge_index'][i])
     # pass
 
 #######TESTAUTOENCODERFILE####################
