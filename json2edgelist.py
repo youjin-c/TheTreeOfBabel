@@ -24,7 +24,7 @@ def datalist(path):
     return data_list
 
 
-data_list = datalist('./categorized/basic')
+data_list = datalist('./datasetTorch/basic')
 # print(data_list[0].edge_index)
 data = data_list[0]
 # print(data)
