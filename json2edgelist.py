@@ -121,6 +121,12 @@ for i, prob in enumerate(value):
     # print(i, prob)
     pass
 
+with open('categorized/'+filename_list[0],'rt') as file:
+    jsons = json.load(file)
+    for i, prob in enumerate(value):
+        print(i, prob, jsons['edge_index'][i])
+    # pass
+
 #######TESTAUTOENCODERFILE####################
 # data = dataset[0]
 # model = GAE(encoder=lambda x: x)
