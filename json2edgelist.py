@@ -23,22 +23,23 @@ def datalist(path):
                 data_list.append(data)
     return data_list
 
-
-data_list = datalist('./datasetTorch/basic/')
-print("datalen",len(data_list))
+path = './datasetTorch/basic/'
+data_list = datalist(path)
+print("datalen",len(data_list),"filename",sorted(os.scandir(path))[0].name)
 # print(data_list[0].edge_index)
 data = data_list[0]
 # print(data)
 
 
-loader = DataLoader(data_list,batch_size = 741,shuffle=False)
+loader = DataLoader(data_list,batch_size = len(data_list),shuffle=False)
 # for data in loader: #batch,
 #     print(data)
 #     print(data.x)
 #     print(data.edge_index)
 for batch in loader:
-    print(batch.num_features)
-    print(batch.num_graphs)
+    # print(batch.num_features)
+    # print(batch.num_graphs)
+    pass
 
 
 data = Data(x=data.x, edge_index=data.edge_index)
