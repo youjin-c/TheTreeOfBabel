@@ -19,12 +19,12 @@ def datalist(path):
                 jsons = json.load(jsonfile)
                 x = torch.tensor(jsons['x'], dtype=torch.float)
                 edge_index = torch.tensor(jsons['edge_index'],dtype=torch.long)
-                data = Data(x=x, edge_index=edge_index.t().contiguous())# print(entry.name.split('.')[0],data)
+                data = Data(x=x, edge_index=edge_index)# print(entry.name.split('.')[0],data)
                 data_list.append(data)
     return data_list
 
 
-data_list = datalist('./datasetTorch/basic')
+data_list = datalist('./datasetTorch/basic/')
 # print(data_list[0].edge_index)
 data = data_list[0]
 # print(data)
