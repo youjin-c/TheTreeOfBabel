@@ -30,7 +30,7 @@ path = './datasetTorch/basic/'
 data_list,filename_list = datalist(path)
 print("datalen",len(data_list),"filename",filename_list)
 # print(data_list[0].edge_index)
-data = data_list[0]
+dataSel = data_list[0]
 # print(data)
 
 
@@ -45,7 +45,7 @@ for batch in loader:
     pass
 
 
-data = Data(x=data.x, edge_index=data.edge_index)
+data = Data(x=dataSel.x, edge_index=dataSel.edge_index)
 # print(data.num_features)
 
 
@@ -123,7 +123,8 @@ for i, prob in enumerate(value):
 
 with open('categorized/basic/'+filename_list[0],'rt') as file:
     jsons = json.load(file)
-    print(len(jsons['edge_index']),len(value),len(jsons['x']))
+    print(dataSel['edge_index'],edge_index)
+    # print(len(jsons['edge_index']),len(value),len(jsons['x']),)
     for i, prob in enumerate(value):
         # print(i, prob, jsons['edge_index'][i])
         pass
