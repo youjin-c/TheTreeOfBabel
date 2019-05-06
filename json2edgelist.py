@@ -32,7 +32,7 @@ data_list,filename_list = datalist(path)
 # print(data_list[0].edge_index)
 dataSel = data_list[0]
 
-print(datasel,filename_list[0])
+print(data_list[0],filename_list[0])
 # print(data)
 
 
