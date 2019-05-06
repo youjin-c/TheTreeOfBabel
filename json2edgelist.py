@@ -128,7 +128,7 @@ for i, prob in enumerate(value):
 with open('categorized/basic/'+filename_list[0],'rt') as file:
     jsons = json.load(file)
     # print(dataSel['edge_index'],edge_index)
-    print(len(jsons['edge_index']),len(value),len(jsons['x']),len(x)))
+    print(len(jsons['edge_index']),len(value),len(jsons['x']),len(x))
     for i, prob in enumerate(value):
         # print(i, prob, jsons['edge_index'][i])
         pass
