@@ -115,6 +115,7 @@ value = model.decode(z, edge_index).tolist()
 # print(value.tolist()) #assert value.tolist() == torch.sigmoid(torch.Tensor([-1, 4])).tolist()
 for i, prob in enumerate(value):
     # print(i, prob)
+    pass
 
 #######TESTAUTOENCODERFILE####################
 # data = dataset[0]
