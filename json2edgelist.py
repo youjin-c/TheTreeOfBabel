@@ -117,8 +117,10 @@ auc, ap = test(data.test_pos_edge_index, data.test_neg_edge_index)
 
 
 z = model.encode(x,edge_index)
-value = model.decode(z, edge_index).tolist()
+value = model.decode(z, edge_index)
+value_list= value.tolist()
 # print(value.tolist()) #assert value.tolist() == torch.sigmoid(torch.Tensor([-1, 4])).tolist()
+print(value)
 for i, prob in enumerate(value):
     # print(i, prob)
     pass
