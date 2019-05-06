@@ -31,6 +31,8 @@ data_list,filename_list = datalist(path)
 # print("datalen",len(data_list),"filename",filename_list)
 # print(data_list[0].edge_index)
 dataSel = data_list[0]
+
+print(datasel,filename_list[0])
 # print(data)
 
 
