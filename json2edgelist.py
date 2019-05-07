@@ -120,13 +120,5 @@ value_list= value.tolist()
 # print("z",z,"len Z",len(z),"value",value)
 train_pos_edge_index = train_pos_edge_index.t()
 for i, prob in enumerate(value_list):
-    print(i, prob, train_pos_edge_index[i])
-    # pass
-print(len(train_pos_edge_index), train_pos_edge_index,len(value_list))
-with open('categorized/basic/'+filename_list[0],'rt') as file:
-    jsons = json.load(file)
-    # print(dataSel['edge_index'],edge_index)
-    # print(len(jsons['edge_index']),len(value),len(jsons['x']),len(x))
-    for i, prob in enumerate(value):
-        # print(i, prob, jsons['edge_index'][i])
-        pass
+    if prob >0.5:
+        print(i, prob, train_pos_edge_index[i].tolist())
