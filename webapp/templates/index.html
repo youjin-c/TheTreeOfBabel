@@ -144,7 +144,7 @@
                 </button>
                 <div class="dropdown-content">
                     <a onload ="noshow('idea');"onclick="toggle('idea');">Project Idea</a><!--img('img/basic.png');-->
-                    <a onload ="noshow('cat');"onclick="toggle('cat');">Categorization</a>
+                    <a onload ="noshow('cat');"onclick="toggle('cat');">Classification</a>
                     <a onload ="noshow('further');"onclick="toggle('further');">Further Steps</a>
                 </div>
         </div>
@@ -155,7 +155,7 @@
             <div class="dropdown-content">
                 <a onclick="genGraph(dataA); img('../static/img/basic.png');">Basic</a>
                 <a onclick="genGraph(dataB); img('../static/img/width.png');" href="#">Broad</a>
-                <a onclick="genGraph(dataC); img('../static/img/length.png');" href="#">Long</a>
+                <a onclick="genGraph(dataC); img('../static/img/length.png');" href="#">Linear</a>
                 <a onclick="genGraph(dataD); img('../static/img/merge.png');" href="#">Merged</a>
                 <a onclick="genGraph(dataE); img('../static/img/cluster.png');" href="#">Clustered</a>
                 <a onclick="genGraph(dataF); img('../static/img/cycle.png');" href="#">Cyclic</a>
@@ -179,7 +179,7 @@
         <br>
     </div>
     <div id="cat" style="display: none;">
-            <h2>Categorization<br></h2>
+            <h2>Classification<br></h2>
             The clustering of graphs from their feature matrix looks like below.<br>
             I have tried to use different algorithms to classify them automatically, but I could not find significant differences between groups when I checked the properties of graphs.<br>
             When I look at the image of clustering visualization, it looks like rather the problem of way of vector embedding than clustering algorithms themselves. <br>
@@ -187,11 +187,10 @@
             <img src="../static/img/clustering.png" width="60%" class="center"><br>
             Instead of using computed categorization, I categorized graphs with names that I made up. The names are inspired by graph properties.<br>
             <br>
-            <h3 >Basic(tree)</h3><br>
+            <h3 >Basic</h3><br>
             <div class="row">
                 <div class="column"><img src="../static/img/basic.png" width="60%" class="center"></div>
                 <div class="column" style="text-align: center;">
-                    
                     They are basic directed graphs. <br><br>
                     Mostly have tree shapes. <br><br>
                     They look clean and straightforward.<br></div>
@@ -200,17 +199,15 @@
             <div class="row">
                 <div class="column"><img src="../static/img/width.png" width="80%" class="center"></div>
                 <div class="column" style="text-align: center;">
-                                      
                     They have larger widths.<br><br>
                     Short playthrough, Strong replayability.<br>
                     </div>
             </div><br><br>
-            <h3>Long</h3><br> 
+            <h3>Linear</h3><br> 
             <div class="row">
                 <div class="column"><img src="../static/img/length.png" width="20%" class="center" ></div>
                 <div class="column" style="text-align: center;">
-                                       
-                    They have linear shapes.<br><br>
+                    This shape indicates the linearity of narrative structure.<br><br>
                     Easy control of drama. Immersive storytelling through long playtime.<br>
                     </div>
             </div><br><br>
@@ -226,26 +223,26 @@
             <div class="row">
                 <div class="column"><img src="../static/img/cluster.png" width="60%" class="center" ></div>
                 <div class="column" style="text-align: center;">                                       
-                    Clustered group of nodes makes a bigger structure.<br><br>
-                    The groups of nodes could be detailed choices in a scene.<br>
+                    Grouped clusters of nodes make a modular structure.<br><br>
+                    The groups of nodes could be detailed choices in a single situation.<br><br>
+                    A tendency to be organized by geography.<br><br>
+                    Fragmentary, episodic.<br>
                     </div>
             </div><br><br>
             <h3>Cyclic</h3><br> 
             <div class="row">
                 <div class="column"><img src="../static/img/cycle.png" width="60%" class="center" ></div>
                 <div class="column" style="text-align: center;">                                       
-                    End nodes are redirected to early-stage nodes.<br><br>
-                    Players can find out new status while experiencing similar narratives.<br><br>
+                    Reversibility. End nodes are redirected to early-stage nodes.<br><br>
+                    Players can unlock new status while looping similar narratives.<br><br>
                     Commonly used for time loops or geo geographic travel.<br>
                     </div>
             </div><br><br><br>
             According to the categorization, the dataset is classified by graph properties.<br>
             Each class is a group of graphs which have prominent values of graph properties.
-            (degree, average_clustering, cycle_basis, treewidth_min_degree, all_pairs_shortest_path_length)
-
-            
-                        
+            (degree, average_clustering, cycle_basis, treewidth_min_degree, all_pairs_shortest_path_length)              
     </div>
+
     <div id="further" style="display: none;">
         <h2>Further Steps</h2><ul>
         <li>Labeling nodes with text: make semantic narratives<br>
@@ -298,6 +295,8 @@
             return obj;
         }
         var myGraph;
+        var w = window.innerWidth;
+        var h = window.innerHeight;
         function genGraph(data){
             document.getElementById('cat').style.display ="none";
             document.getElementById('idea').style.display ="none";
@@ -307,8 +306,7 @@
             if(elem.style.display ==="none"){
                 elem.style.display = "block";
             }
-            var w = window.innerWidth;
-            var h = window.innerHeight;
+            
             myGraph = ForceGraph3D() //const
                 (elem)
                 .graphData(data)
