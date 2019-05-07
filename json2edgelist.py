@@ -123,9 +123,9 @@ value_list= value.tolist()
 # print(value.tolist()) 
 # print("z",z,"len Z",len(z),"value",value)
 for i, prob in enumerate(value):
-    print(i, prob, edgelist(i))
+    print(i, prob)#, edgelist(i))
     # pass
-
+print(len(edgelist), edgelist,len(value_list))
 with open('categorized/basic/'+filename_list[0],'rt') as file:
     jsons = json.load(file)
     # print(dataSel['edge_index'],edge_index)
