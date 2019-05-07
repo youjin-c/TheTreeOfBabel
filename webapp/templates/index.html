@@ -1,7 +1,10 @@
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
     <style>
         html,body {
-            font-family: Helvetica;
+            /* font-family: Helvetica; */
+            font-family: Karla;
+            padding:10px;
         }
 
         /* Navbar container */
@@ -9,7 +12,6 @@
             float: right;
             overflow: hidden;
             background-color: #333;
-            font-family: Arial;
         }
 
         /* Links inside the navbar */
@@ -80,27 +82,68 @@
         }
         div#3d-graph{
             z-index: 100;
-            position: absolute;
-            padding-top: 70px;
+            /* padding: 10px; */
+            width: 70%;
+            /* position: absolute; */
             /* overflow: auto; */
+            align-content: center;
+            align-items: center;
+        }
+        #idea,#further,#cat{
+            background-color: rgba(233, 233, 233, 0.95);
+            padding: 20px;
+            z-index: 999;
+        }
+        img {
+            display: inline-block;
+        }
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+        .column {
+            float: left;
+            width: 50%;
+        }
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .hero-bkg-animated {
+            background: url(../img/randomgraph.png) repeat 0 0;
+            width: 100%;
+            margin: 0;
+            height: 300px;
+            box-sizing: border-box;
+            -webkit-animation: slide 20s linear infinite;
+        }
+
+        @-webkit-keyframes slide {
+            from { background-position: 0 0; }
+            to { background-position: -400px 0; }
         }
     </style>
+    
 </head>
 
 <script src="https://unpkg.com/3d-force-graph"></script>
 <script src="https://unpkg.com/three"></script>
 <script src="https://unpkg.com/three-spritetext"></script>
 
-<body><!-- class="hero-bkg-animated">-->
+<body class="hero-bkg-animated">
     <div class="navbar">
         <div class="dropdown">
                 <button class="dropbtn">Project Description
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
-                    <a onload ="noshow('idea');"onclick="toggle('idea');">Idea</a><!--img('img/basic.png');-->
-                    <a onload ="noshow('cat');"onclick="toggle('cat');" href="#">Categories</a>
-                    <a onload ="noshow('further');"onclick="toggle('further');" href="#">Further Steps</a>
+                    <a onload ="noshow('idea');"onclick="toggle('idea');">Project Idea</a><!--img('img/basic.png');-->
+                    <a onload ="noshow('cat');"onclick="toggle('cat');">Categorization</a>
+                    <a onload ="noshow('further');"onclick="toggle('further');">Further Steps</a>
                 </div>
         </div>
         <div class="dropdown">
@@ -108,12 +151,12 @@
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <a onclick="genGraph(dataA);">Basic</a>
-                <a onclick="genGraph(dataB);" href="#">Width</a>
-                <a onclick="genGraph(dataC);" href="#">Length</a>
-                <a onclick="genGraph(dataD);" href="#">Mergence</a>
-                <a onclick="genGraph(dataE);" href="#">Cluster</a>
-                <a onclick="genGraph(dataF);" href="#">Cycle</a>
+                <a onclick="genGraph(dataA); img('../img/basic.png');">Basic</a>
+                <a onclick="genGraph(dataB); img('../img/width.png');" href="#">Broad</a>
+                <a onclick="genGraph(dataC); img('../img/length.png');" href="#">Long</a>
+                <a onclick="genGraph(dataD); img('../img/merge.png');" href="#">Merged</a>
+                <a onclick="genGraph(dataE); img('../img/cluster.png');" href="#">Clustered</a>
+                <a onclick="genGraph(dataF); img('../img/cycle.png');" href="#">Cyclic</a>
             </div>
         </div>
     </div>
@@ -122,14 +165,58 @@
         <p class="Helvetica">The Tree of Babel</p>
         
     </h1>
-    <div id="idea">
-        Idea HERE
+    <div id="idea" style="display: block;">
+        <h2>Project Idea<br></h2><br>
+        The project goal is understanding and generating interactive narrative structures using Machine Learning models.<br><br>
+        This project is inspired by the idea of <a href="https://heterogenoustasks.wordpress.com/2015/01/26/standard-patterns-in-choice-based-games/" target="_blank">Standard Patterns in Choice-Based Games</a>, that analyzing interactive narrative structures of games as graph and design pattern.<br><br>The dataset is customized for ML libraries and scraped from <a href="https://jeremydouglass.github.io/transverse-gallery/" target="_blank">TransverseReadingGallery</a>.<br><br>Basic concept:<br><ol><ol><li>Convert graphs to feature matrix of vector embeddings*.<br></li><li>
+        Categorize graphs by clustering algorithms.<br></li><li>Generate new graphs from categories using autoencoder.<br></li></ol></ol>&nbsp; 
+
+        <br>
+        Used libraries and ML models: <br>
+        <ul><ul><li><a href="https://networkx.github.io/" target="_blank">NetworkX</a>: graph properties (width, length, clustering, degree, cycle)</li><li><a href="https://github.com/benedekrozemberczki/graph2vec" target="_blank">graph2vec</a>: extracting feature matrix</li><li><a href="https://scikit-learn.org/stable/modules/clustering.html#clustering" target="_blank">scikit-learn</a>: K-means, Spectral, Agglomerative, Mean Shift Clustering</li><li><a href="https://rusty1s.github.io/pytorch_geometric/build/html/modules/nn.html#torch_geometric.nn.models.GAE" target="_blank">PyTorch geometric</a>: Autoencoder</li></ul></ul><br>*An embedding is a relatively low-dimensional space into which you can translate high-dimensional vectors. Embeddings make it easier to do machine learning on large inputs like sparse vectors representing words. Ideally, an embedding captures some of the semantics of the input by placing semantically similar inputs close together in the embedding space. An embedding can be learned and reused across models. (Google Developers Machine Learning Course)
+        <br>
+        &nbsp;<br><div style="text-align: right">ITP Thesis 2019,&nbsp;<a href="http://youjin.io" target="_blank">Youjin Chung</a></div> <br>
+        <a href="https://jeremydouglass.github.io/transverse-gallery/" target="_blank"></a>
+        <br>
     </div>
     <div id="cat" style="display: none;">
-        CAT HERE
+            <h2>Categorization<br></h2>
+            The clustering of graphs from their feature matrix looks like below.<br>
+            I have tried to use different algorithms to classify them automatically, but I could not find significant differences between groups when I checked the properties of graphs.<br>
+            When I look at the image of clustering visualization, it looks like rather the problem of way of vector embedding than clustering algorithms themselves. <br>
+            Since the X coordinate just represents the index of graph orders, significant values are Y coordinates only.<br>To fix this problem, I need to try with the array of feature matrixes of each graph, rather than just a feature matrix of whole graphs.<br><br><br>
+            <img src="../img/clustering.png" width="60%" class="center"><br>
+            Instead of using computed categorization, I categorized graphs with names that I made up. The names are inspired by graph properties.<br>
+            <br>
+            <div class="row">
+                <div class="column"><img src="../img/basic.png" width="100%"></div>
+                <div class="column_middle"></div>
+                <div class="column">
+                    <h3>Basic(tree)</h3><br>
+                    They are basic directed graphs. <br>
+                    Mostly have tree shapes. <br>
+                    They look clean and straightforward.<br></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="column"><img src="../img/width.png" width="100%"></div>
+                <div class="column">
+                    <h3>Broad</h3><br>                    
+                    They have larger widths.<br>
+                    Short playthrough, Strong replayability.<br>
+                    </div>
+            </div>
+            
+            
+                        
     </div>
     <div id="further" style="display: none;">
-        Furter steps HERE
+        <h2>Further Steps</h2><ul>
+        <li>Labeling nodes with text: make semantic narratives<br>
+        Using similarity of document matrix of word embeddings and graph feature matrix, assign sentences to node labels.</li></ul>
+        <ul><li>Better vector representation of graphs for categorization</li></ul>
+        <ul><li>Visual representation of&nbsp; the comparison of generated and original graphs<br></li></ul>
+        <ul><li>Add json file download feature of generated graphs<br></li></ul>
     </div>
     <div id="3d-graph"></div>
     
@@ -182,21 +269,23 @@
         }
         var myGraph;
         function genGraph(data){
+            document.getElementById('cat').style.display ="none";
+            document.getElementById('idea').style.display ="none";
+            document.getElementById('further').style.display ="none";
             var data = convertData(data);
             var elem = document.getElementById('3d-graph');
             if(elem.style.display ==="none"){
                 elem.style.display = "block";
-                document.getElementById('cat').style.display ="none";
-                document.getElementById('idea').style.display ="none";
-                document.getElementById('further').style.display ="none";
             }
-
+            var w = window.innerWidth;
+            var h = window.innerHeight;
             myGraph = ForceGraph3D() //const
                 (elem)
                 .graphData(data)
                 .nodeAutoColorBy('id')
                 .nodeLabel('id')
-
+                .width(w*0.95)
+                .height(h*0.8)
 
                 .linkDirectionalArrowLength(3.5)
                 .linkDirectionalArrowRelPos(1)
@@ -237,8 +326,6 @@
                         x.style.display = "block";
                         document.getElementById('cat').style.display ="none";
                         document.getElementById('further').style.display ="none";
-                    } else {
-                        x.style.display = "none";
                     }
                     break;
                 case 'cat':
@@ -247,8 +334,6 @@
                             x.style.display = "block";
                             document.getElementById('idea').style.display ="none";
                             document.getElementById('further').style.display ="none";
-                        } else {
-                            x.style.display = "none";
                         }
                     break;
                 case 'further':
@@ -257,9 +342,10 @@
                             x.style.display = "block";
                             document.getElementById('idea').style.display ="none";
                             document.getElementById('cat').style.display ="none";
-                        } else {
-                            x.style.display = "none";
                         }
+                        //  else {
+                        //     x.style.display = "none";
+                        // }
                     break;
             }
         }
