@@ -32,7 +32,7 @@ data_list,filename_list = datalist(path)
 # print(data_list[0].edge_index)
 dataSel = data_list[0]
 
-print(data_list[0],filename_list[0])
+# print(data_list[0],filename_list[0])
 # print(data)
 
 
@@ -121,7 +121,7 @@ z = model.encode(x,edge_index)
 value = model.decode(z, edge_index)
 value_list= value.tolist()
 # print(value.tolist()) 
-print("z",z,"len Z",len(z),"value",value)
+# print("z",z,"len Z",len(z),"value",value)
 for i, prob in enumerate(value):
     # print(i, prob)
     pass
@@ -129,7 +129,7 @@ for i, prob in enumerate(value):
 with open('categorized/basic/'+filename_list[0],'rt') as file:
     jsons = json.load(file)
     # print(dataSel['edge_index'],edge_index)
-    print(len(jsons['edge_index']),len(value),len(jsons['x']),len(x))
+    # print(len(jsons['edge_index']),len(value),len(jsons['x']),len(x))
     for i, prob in enumerate(value):
         # print(i, prob, jsons['edge_index'][i])
         pass
