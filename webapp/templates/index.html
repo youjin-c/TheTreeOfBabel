@@ -98,9 +98,9 @@
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
-                    <a onclick="img('img/basic.png');">Idea</a>
-                    <a onclick="img('img/width.png');" href="#">Categories</a>
-                    <a onclick="img('img/length.png');" href="#">Further Steps</a>
+                    <a onload ="noshow('idea');"onclick="toggle('idea');">Idea</a><!--img('img/basic.png');-->
+                    <a onload ="noshow('cat');"onclick="toggle('cat');" href="#">Categories</a>
+                    <a onload ="noshow('further');"onclick="toggle('further');" href="#">Further Steps</a>
                 </div>
         </div>
         <div class="dropdown">
@@ -108,12 +108,12 @@
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <a genGraph(dataA);">Basic</a>
-                <a genGraph(dataB);" href="#">Width</a>
-                <a genGraph(dataC);" href="#">Length</a>
-                <a genGraph(dataD);" href="#">Mergence</a>
-                <a genGraph(dataE);" href="#">Cluster</a>
-                <a genGraph(dataF);" href="#">Cycle</a>
+                <a onclick="genGraph(dataA);">Basic</a>
+                <a onclick="genGraph(dataB);" href="#">Width</a>
+                <a onclick="genGraph(dataC);" href="#">Length</a>
+                <a onclick="genGraph(dataD);" href="#">Mergence</a>
+                <a onclick="genGraph(dataE);" href="#">Cluster</a>
+                <a onclick="genGraph(dataF);" href="#">Cycle</a>
             </div>
         </div>
     </div>
@@ -122,6 +122,15 @@
         <p class="Helvetica">The Tree of Babel</p>
         
     </h1>
+    <div id="idea">
+        Idea HERE
+    </div>
+    <div id="cat" style="display: none;">
+        CAT HERE
+    </div>
+    <div id="further" style="display: none;">
+        Furter steps HERE
+    </div>
     <div id="3d-graph"></div>
     
     <!-- <div class="hero-bkg-animated" style="background-image: url("img/A/0202.png");"></div> -->
@@ -171,46 +180,89 @@
             };
             return obj;
         }
+        var myGraph;
         function genGraph(data){
-        var data = convertData(data);
-        var elem = document.getElementById('3d-graph');
-        const myGraph = ForceGraph3D()
-            (elem)
-            .graphData(data)
-            .nodeAutoColorBy('id')
-            .nodeLabel('id')
+            var data = convertData(data);
+            var elem = document.getElementById('3d-graph');
+            if(elem.style.display ==="none"){
+                elem.style.display = "block";
+                document.getElementById('cat').style.display ="none";
+                document.getElementById('idea').style.display ="none";
+                document.getElementById('further').style.display ="none";
+            }
+
+            myGraph = ForceGraph3D() //const
+                (elem)
+                .graphData(data)
+                .nodeAutoColorBy('id')
+                .nodeLabel('id')
 
 
-            .linkDirectionalArrowLength(3.5)
-            .linkDirectionalArrowRelPos(1)
+                .linkDirectionalArrowLength(3.5)
+                .linkDirectionalArrowRelPos(1)
 
-            .nodeThreeObject(node => {
-                // use a sphere as a drag handle
-                const obj = new THREE.Mesh(
-                    new THREE.SphereGeometry(10),
-                    new THREE.MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0 })
-                );
-                // add text sprite as child
-                const sprite = new SpriteText(node.id);
-                sprite.color = node.color;
-                sprite.textHeight = 8;
-                obj.add(sprite);
-                return obj;
-            })
+                .nodeThreeObject(node => {
+                    // use a sphere as a drag handle
+                    const obj = new THREE.Mesh(
+                        new THREE.SphereGeometry(10),
+                        new THREE.MeshBasicMaterial({ depthWrite: false, transparent: true, opacity: 0 })
+                    );
+                    // add text sprite as child
+                    const sprite = new SpriteText(node.id);
+                    sprite.color = node.color;
+                    sprite.textHeight = 8;
+                    obj.add(sprite);
+                    return obj;
+                })
 
-            .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
-            .onNodeClick(node => {
-                // Aim at node from outside it
-                const distance = 150;
-                const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
-                myGraph.cameraPosition(
-                    { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
-                    node, // lookAt ({ x, y, z })
-                    3000  // ms transition duration
-                );
-            });
+                .onNodeHover(node => elem.style.cursor = node ? 'pointer' : null)
+                .onNodeClick(node => {
+                    // Aim at node from outside it
+                    const distance = 150;
+                    const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+                    myGraph.cameraPosition(
+                        { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
+                        node, // lookAt ({ x, y, z })
+                        3000  // ms transition duration
+                    );
+                });
         }
-        // console.log(nodeGen(dataA));
+        function toggle(id) {
+            document.getElementById('3d-graph').style.display="none";
+            delete myGraph;
+            switch(id){
+                case 'idea':
+                    var x = document.getElementById('idea');
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                        document.getElementById('cat').style.display ="none";
+                        document.getElementById('further').style.display ="none";
+                    } else {
+                        x.style.display = "none";
+                    }
+                    break;
+                case 'cat':
+                    var x = document.getElementById('cat');
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                            document.getElementById('idea').style.display ="none";
+                            document.getElementById('further').style.display ="none";
+                        } else {
+                            x.style.display = "none";
+                        }
+                    break;
+                case 'further':
+                    var x = document.getElementById('further');
+                        if (x.style.display === "none") {
+                            x.style.display = "block";
+                            document.getElementById('idea').style.display ="none";
+                            document.getElementById('cat').style.display ="none";
+                        } else {
+                            x.style.display = "none";
+                        }
+                    break;
+            }
+        }
         
 
 
