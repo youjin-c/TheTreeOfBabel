@@ -6,6 +6,9 @@
             font-family: Karla;
             padding:10px;
         }
+        h3{
+            text-align: center;
+        }
 
         /* Navbar container */
         .navbar {
@@ -101,7 +104,7 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
-            width: 50%;
+            /* width: 50%; */
         }
         .column {
             float: left;
@@ -188,25 +191,62 @@
             <img src="../img/clustering.png" width="60%" class="center"><br>
             Instead of using computed categorization, I categorized graphs with names that I made up. The names are inspired by graph properties.<br>
             <br>
+            <h3 >Basic(tree)</h3><br>
             <div class="row">
-                <div class="column"><img src="../img/basic.png" width="100%"></div>
-                <div class="column_middle"></div>
-                <div class="column">
-                    <h3>Basic(tree)</h3><br>
-                    They are basic directed graphs. <br>
-                    Mostly have tree shapes. <br>
+                <div class="column"><img src="../img/basic.png" width="60%" class="center"></div>
+                <div class="column" style="text-align: center;">
+                    
+                    They are basic directed graphs. <br><br>
+                    Mostly have tree shapes. <br><br>
                     They look clean and straightforward.<br></div>
-            </div>
-            <br>
+            </div><br><br>
+            <h3>Broad</h3><br>  
             <div class="row">
-                <div class="column"><img src="../img/width.png" width="100%"></div>
-                <div class="column">
-                    <h3>Broad</h3><br>                    
-                    They have larger widths.<br>
+                <div class="column"><img src="../img/width.png" width="80%" class="center"></div>
+                <div class="column" style="text-align: center;">
+                                      
+                    They have larger widths.<br><br>
                     Short playthrough, Strong replayability.<br>
                     </div>
-            </div>
-            
+            </div><br><br>
+            <h3>Long</h3><br> 
+            <div class="row">
+                <div class="column"><img src="../img/length.png" width="20%" class="center" ></div>
+                <div class="column" style="text-align: center;">
+                                       
+                    They have linear shapes.<br><br>
+                    Easy control of drama. Immersive storytelling through long playtime.<br>
+                    </div>
+            </div><br><br>
+            <h3>Merged</h3><br> 
+            <div class="row">
+                <div class="column"><img src="../img/merge.png" width="65%" class="center" ></div>
+                <div class="column" style="text-align: center;">                                       
+                    The graphs merge into certain points.<br><br>
+                    Those points usually represent important events in a story.<br>
+                    </div>
+            </div><br><br>
+            <h3>Clustered</h3><br> 
+            <div class="row">
+                <div class="column"><img src="../img/cluster.png" width="60%" class="center" ></div>
+                <div class="column" style="text-align: center;">                                       
+                    Clustered group of nodes makes a bigger structure.<br><br>
+                    The groups of nodes could be detailed choices in a scene.<br>
+                    </div>
+            </div><br><br>
+            <h3>Cyclic</h3><br> 
+            <div class="row">
+                <div class="column"><img src="../img/cycle.png" width="60%" class="center" ></div>
+                <div class="column" style="text-align: center;">                                       
+                    End nodes are redirected to early-stage nodes.<br><br>
+                    Players can find out new status while experiencing similar narratives.<br><br>
+                    Commonly used for time loops or geo geographic travel.<br>
+                    </div>
+            </div><br><br><br>
+            According to the categorization, the dataset is classified by graph properties.<br>
+            Each class is a group of graphs which have prominent values of graph properties.
+            (degree, average_clustering, cycle_basis, treewidth_min_degree, all_pairs_shortest_path_length)
+
             
                         
     </div>
@@ -350,9 +390,5 @@
             }
         }
         
-
-
-
-
     </script>
 </body>
