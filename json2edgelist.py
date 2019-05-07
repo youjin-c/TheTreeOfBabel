@@ -85,16 +85,16 @@ model = kwargs[args.model](Encoder(batch.num_features, channels)).to(device)
 data.train_mask = data.val_mask = data.test_mask = data.y = None
 data = model.split_edges(data)
 edgelist=data['edge_index'].t()
-x, edge_index = data.x.to(device), data.edge_index.to(device)###
+x, train_pos_edge_index = data.x.to(device), data.train_pos_edge_index.to(device)###
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
 def train():
     model.train()
     optimizer.zero_grad()
-    z = model.encode(x, edge_index)
+    z = model.encode(x, train_pos_edge_index)
     loss = model.recon_loss(z, data.train_pos_edge_index)
     if args.model in ['VGAE']:
-        loss = loss + 0.001 * model.kl_loss()
+        loss = loss + (1 / data.num_nodes)  * model.kl_loss()
     loss.backward()
     optimizer.step()
 
@@ -102,23 +102,18 @@ def train():
 def test(pos_edge_index, neg_edge_index):
     model.eval()
     with torch.no_grad():
-        z = model.encode(x, edge_index)
+        z = model.encode(x, train_pos_edge_index)
     return model.test(z, pos_edge_index, neg_edge_index)
 
 
-for epoch in range(1, 101):
+for epoch in range(1, 401):
     train()
     auc, ap = test(data.val_pos_edge_index, data.val_neg_edge_index)
     # print('Epoch: {:03d}, AUC: {:.4f}, AP: {:.4f}'.format(epoch, auc, ap))
 
-auc, ap = test(data.test_pos_edge_index, data.test_neg_edge_index)
-# print('Test AUC: {:.4f}, Test AP: {:.4f}'.format(auc, ap))
 
-
-
-
-z = model.encode(x,edge_index)
-value = model.decode(z, edge_index)
+z = model.encode(x,train_pos_edge_index)
+value = model.decode(z, train_pos_edge_index)
 value_list= value.tolist()
 # print(value.tolist()) 
 # print("z",z,"len Z",len(z),"value",value)
