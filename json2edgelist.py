@@ -119,6 +119,17 @@ value_list= value.tolist()
 # print(value.tolist()) 
 # print("z",z,"len Z",len(z),"value",value)
 train_pos_edge_index = train_pos_edge_index.t()
+
+decoded ={}
+decoded['edge_index']=[]
+decoded['x']=[]
 for i, prob in enumerate(value_list):
     if prob >0.5:
-        print(i, prob, train_pos_edge_index[i].tolist())
+        # print(i, prob, train_pos_edge_index[i].tolist())
+        decoded['edge_index'].append(train_pos_edge_index[i].tolist())
+        decoded['x'].append(train_pos_edge_index[i].tolist()[0])
+        decoded['x'].append(train_pos_edge_index[i].tolist()[1])
+
+decoded['x'] = list(dict.fromkeys(decoded['x']))
+
+print(decoded)
