@@ -2,11 +2,9 @@ import sys
 import os
 from pathlib import Path
 import json
-
 import torch
-from torch_geometric.data import Data,InMemoryDataset,DataLoader
-
 import argparse
+from torch_geometric.data import Data,InMemoryDataset,DataLoader
 import torch.nn.functional as F
 import torch_geometric.transforms as T
 from torch_geometric.nn import GCNConv, GAE, VGAE
@@ -28,19 +26,12 @@ def datalist(pathTorch):
 
 path = './datasetTorch/basic/'
 data_list,filename_list = datalist(path)
-# print("datalen",len(data_list),"filename",filename_list)
-# print(data_list[0].edge_index)
 dataSel = data_list[0]
 
-print(data_list[0],filename_list[0])
-# print(data)
+#dataSel == {"x": [[0], [1], [2], [3], [4], [5], [6], [7], [8], [9], [10], [11], [12], [13], [14], [15], [16], [17], [18], [19], [20], [21], [22], [23], [24], [25], [26], [27], [28], [29], [30], [31], [32], [33], [34], [35], [36], [37], [38], [39], [40], [41], [42], [43], [44], [45], [46], [47], [48], [49], [50], [51], [52], [53], [54], [55], [56], [57], [58], [59], [60], [61], [62], [63], [64], [65], [66], [67], [68], [69], [70], [71], [72], [73], [74], [75], [76], [77], [78], [79], [80], [81], [82], [83], [84], [85], [86], [87], [88], [89], [90], [91], [92], [93], [94], [95], [96], [97], [98], [99], [100], [101], [102], [103], [104], [105], [106], [107], [108], [109], [110], [111], [112], [113], [114], [115], [116]], "edge_index": [[2, 3, 3, 4, 3, 5, 4, 8, 4, 10, 5, 6, 5, 16, 6, 22, 6, 114, 8, 9, 9, 17, 9, 18, 10, 20, 10, 61, 10, 21, 11, 12, 11, 13, 12, 66, 12, 78, 13, 14, 13, 15, 16, 24, 16, 25, 17, 26, 17, 28, 18, 19, 19, 29, 19, 30, 20, 93, 21, 33, 21, 35, 22, 23, 23, 36, 23, 37, 24, 38, 24, 40, 25, 43, 25, 41, 25, 44, 25, 45, 26, 27, 27, 46, 27, 47, 28, 51, 29, 52, 29, 53, 30, 54, 30, 92, 32, 58, 32, 64, 33, 34, 34, 68, 34, 79, 35, 76, 35, 80, 36, 11, 37, 11, 38, 39, 39, 82, 39, 87, 40, 115, 40, 83, 47, 48, 48, 49, 48, 50, 49, 25, 50, 81, 54, 55, 55, 94, 55, 98, 55, 107, 56, 57, 56, 60, 58, 59, 59, 62, 59, 63, 61, 104, 61, 106, 64, 65, 65, 102, 66, 70, 66, 74, 70, 71, 71, 72, 71, 103, 79, 86, 79, 88, 83, 85, 83, 84, 88, 89, 89, 90, 89, 91, 92, 56, 93, 31, 93, 32, 94, 96, 94, 100, 96, 97, 104, 105, 105, 107, 105, 109, 106, 111, 106, 113, 109, 110, 111, 112, 114, 61], [3, 2, 4, 3, 5, 3, 8, 4, 10, 4, 6, 5, 16, 5, 22, 6, 114, 6, 9, 8, 17, 9, 18, 9, 20, 10, 61, 10, 21, 10, 12, 11, 13, 11, 66, 12, 78, 12, 14, 13, 15, 13, 24, 16, 25, 16, 26, 17, 28, 17, 19, 18, 29, 19, 30, 19, 93, 20, 33, 21, 35, 21, 23, 22, 36, 23, 37, 23, 38, 24, 40, 24, 43, 25, 41, 25, 44, 25, 45, 25, 27, 26, 46, 27, 47, 27, 51, 28, 52, 29, 53, 29, 54, 30, 92, 30, 58, 32, 64, 32, 34, 33, 68, 34, 79, 34, 76, 35, 80, 35, 11, 36, 11, 37, 39, 38, 82, 39, 87, 39, 115, 40, 83, 40, 48, 47, 49, 48, 50, 48, 25, 49, 81, 50, 55, 54, 94, 55, 98, 55, 107, 55, 57, 56, 60, 56, 59, 58, 62, 59, 63, 59, 104, 61, 106, 61, 65, 64, 102, 65, 70, 66, 74, 66, 71, 70, 72, 71, 103, 71, 86, 79, 88, 79, 85, 83, 84, 83, 89, 88, 90, 89, 91, 89, 56, 92, 31, 93, 32, 93, 96, 94, 100, 94, 97, 96, 105, 104, 107, 105, 109, 105, 111, 106, 113, 106, 110, 109, 112, 111, 61, 114]]}
 
 
 loader = DataLoader(data_list,batch_size = len(data_list),shuffle=False)
-# for data in loader: #batch,
-#     print(data)
-#     print(data.x)
-#     print(data.edge_index)
 for batch in loader:
     # print(batch.num_features)
     # print(batch.num_graphs)
@@ -48,8 +39,6 @@ for batch in loader:
 
 
 data = Data(x=dataSel.x, edge_index=dataSel.edge_index)
-# print(data.num_features)
-
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=str, default='GAE')
@@ -83,7 +72,7 @@ channels = 16
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = kwargs[args.model](Encoder(batch.num_features, channels)).to(device)
 data.train_mask = data.val_mask = data.test_mask = data.y = None
-# data = model.split_edges(data)
+data = model.split_edges(data)
 x, edge_index = data.x.to(device), data.edge_index.to(device)###
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
@@ -110,78 +99,8 @@ for epoch in range(1, 101):
     auc, ap = test(data.val_pos_edge_index, data.val_neg_edge_index)
     # print('Epoch: {:03d}, AUC: {:.4f}, AP: {:.4f}'.format(epoch, auc, ap))
 
-auc, ap = test(data.test_pos_edge_index, data.test_neg_edge_index)
-# print('Test AUC: {:.4f}, Test AP: {:.4f}'.format(auc, ap))
-
-
-
 
 z = model.encode(x,edge_index)
 value = model.decode(z, edge_index)
 value_list= value.tolist()
-# print(value.tolist()) 
-print("z",z,"len Z",len(z),"value",value)
-for i, prob in enumerate(value):
-    # print(i, prob)
-    pass
 
-with open('categorized/basic/'+filename_list[0],'rt') as file:
-    jsons = json.load(file)
-    # print(dataSel['edge_index'],edge_index)
-    print(len(jsons['edge_index']),len(value),len(jsons['x']),len(x))
-    for i, prob in enumerate(value):
-        # print(i, prob, jsons['edge_index'][i])
-        pass
-
-#######TESTAUTOENCODERFILE####################
-# data = dataset[0]
-# model = GAE(encoder=lambda x: x)
-# model.reset_parameters()
-# for data in loader:
-#     z = model.encode(data.x)
-#     # adj = model.decoder.forward_all(z)
-#     value = model.decode(z, data.edge_index)
-#     print(value)
-    # print(data)
-    # print(data.x)
-    # print(data.edge_index)
-
-
-# # def test_gae():
-#     model = GAE(encoder=lambda x: x)
-#     model.reset_parameters()
-
-#     x = torch.Tensor([[1, -1], [1, 2], [2, 1]])
-#     z = model.encode(x)
-#     assert z.tolist() == x.tolist()
-
-#     adj = model.decoder.forward_all(z)
-#     assert adj.tolist() == torch.sigmoid(
-#         torch.Tensor([[+2, -1, +1], [-1, +5, +4], [+1, +4, +5]])).tolist()
-#     # print("adj",adj.tolist())
-
-#     edge_index = torch.tensor([[0, 1], [1, 2]])
-#     value = model.decode(z, edge_index)
-#     assert value.tolist() == torch.sigmoid(torch.Tensor([-1, 4])).tolist()
-#     # print("value",value.tolist())
-
-#     edge_index = torch.tensor([[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-#                                [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]])
-#     data = Data(edge_index=edge_index)
-#     data.num_nodes = edge_index.max().item() + 1
-#     data = model.split_edges(data, val_ratio=0.2, test_ratio=0.3)
-
-#     assert data.val_pos_edge_index.size() == (2, 2)
-#     assert data.val_neg_edge_index.size() == (2, 2)
-#     assert data.test_pos_edge_index.size() == (2, 3)
-#     assert data.test_neg_edge_index.size() == (2, 3)
-#     assert data.train_pos_edge_index.size() == (2, 5)
-#     assert data.train_neg_adj_mask.size() == (11, 11)
-#     assert data.train_neg_adj_mask.sum().item() == (11**2 - 11) / 2 - 4 - 6 - 5
-
-#     z = torch.randn(11, 16)
-#     loss = model.recon_loss(z, data.train_pos_edge_index)
-#     assert loss.item() > 0
-
-#     auc, ap = model.test(z, data.val_pos_edge_index, data.val_neg_edge_index)
-#     assert auc >= 0 and auc <= 1 and ap >= 0 and ap <= 1
