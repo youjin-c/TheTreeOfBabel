@@ -84,7 +84,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = kwargs[args.model](Encoder(batch.num_features, channels)).to(device)
 data.train_mask = data.val_mask = data.test_mask = data.y = None
 data = model.split_edges(data)
-print(data['edge_index'].t())
+edgelist=data['edge_index'].t()
 x, edge_index = data.x.to(device), data.edge_index.to(device)###
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
@@ -123,8 +123,8 @@ value_list= value.tolist()
 # print(value.tolist()) 
 # print("z",z,"len Z",len(z),"value",value)
 for i, prob in enumerate(value):
-    # print(i, prob)
-    pass
+    print(i, prob, edgelist(i))
+    # pass
 
 with open('categorized/basic/'+filename_list[0],'rt') as file:
     jsons = json.load(file)
