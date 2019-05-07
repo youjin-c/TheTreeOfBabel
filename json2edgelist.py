@@ -84,7 +84,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = kwargs[args.model](Encoder(batch.num_features, channels)).to(device)
 data.train_mask = data.val_mask = data.test_mask = data.y = None
 data = model.split_edges(data)
-edgelist=data['edge_index'].t()
+# edgelist=data['edge_index'].t()
 x, train_pos_edge_index = data.x.to(device), data.train_pos_edge_index.to(device)###
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 
@@ -115,8 +115,10 @@ for epoch in range(1, 401):
 z = model.encode(x,train_pos_edge_index)
 value = model.decode(z, train_pos_edge_index)
 value_list= value.tolist()
+
 # print(value.tolist()) 
 # print("z",z,"len Z",len(z),"value",value)
+train_pos_edge_index = train_pos_edge_index.t()
 for i, prob in enumerate(value_list):
     print(i, prob, train_pos_edge_index[i])
     # pass
