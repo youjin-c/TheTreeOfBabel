@@ -113,17 +113,13 @@ for epoch in range(1, 401):
 
 
 z = model.encode(x,train_pos_edge_index)
-value = model.decode(z, train_pos_edge_index)
-value_list= value.tolist()
-
-# print(value.tolist()) 
-# print("z",z,"len Z",len(z),"value",value)
+value = model.decode(z, train_pos_edge_index).tolist()
 train_pos_edge_index = train_pos_edge_index.t()
 
 decoded ={}
 decoded['edge_index']=[]
 decoded['x']=[]
-for i, prob in enumerate(value_list):
+for i, prob in enumerate(value):
     if prob >0.5:
         # print(i, prob, train_pos_edge_index[i].tolist())
         decoded['edge_index'].append(train_pos_edge_index[i].tolist())
