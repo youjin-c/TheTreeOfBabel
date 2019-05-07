@@ -118,9 +118,9 @@ value_list= value.tolist()
 # print(value.tolist()) 
 # print("z",z,"len Z",len(z),"value",value)
 for i, prob in enumerate(value_list):
-    print(i, prob, edgelist[i])
+    print(i, prob, train_pos_edge_index[i])
     # pass
-print(len(edgelist), edgelist,len(value_list))
+print(len(train_pos_edge_index), train_pos_edge_index,len(value_list))
 with open('categorized/basic/'+filename_list[0],'rt') as file:
     jsons = json.load(file)
     # print(dataSel['edge_index'],edge_index)
@@ -128,56 +128,3 @@ with open('categorized/basic/'+filename_list[0],'rt') as file:
     for i, prob in enumerate(value):
         # print(i, prob, jsons['edge_index'][i])
         pass
-
-#######TESTAUTOENCODERFILE####################
-# data = dataset[0]
-# model = GAE(encoder=lambda x: x)
-# model.reset_parameters()
-# for data in loader:
-#     z = model.encode(data.x)
-#     # adj = model.decoder.forward_all(z)
-#     value = model.decode(z, data.edge_index)
-#     print(value)
-    # print(data)
-    # print(data.x)
-    # print(data.edge_index)
-
-
-# # def test_gae():
-#     model = GAE(encoder=lambda x: x)
-#     model.reset_parameters()
-
-#     x = torch.Tensor([[1, -1], [1, 2], [2, 1]])
-#     z = model.encode(x)
-#     assert z.tolist() == x.tolist()
-
-#     adj = model.decoder.forward_all(z)
-#     assert adj.tolist() == torch.sigmoid(
-#         torch.Tensor([[+2, -1, +1], [-1, +5, +4], [+1, +4, +5]])).tolist()
-#     # print("adj",adj.tolist())
-
-#     edge_index = torch.tensor([[0, 1], [1, 2]])
-#     value = model.decode(z, edge_index)
-#     assert value.tolist() == torch.sigmoid(torch.Tensor([-1, 4])).tolist()
-#     # print("value",value.tolist())
-
-#     edge_index = torch.tensor([[0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-#                                [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]])
-#     data = Data(edge_index=edge_index)
-#     data.num_nodes = edge_index.max().item() + 1
-#     data = model.split_edges(data, val_ratio=0.2, test_ratio=0.3)
-
-#     assert data.val_pos_edge_index.size() == (2, 2)
-#     assert data.val_neg_edge_index.size() == (2, 2)
-#     assert data.test_pos_edge_index.size() == (2, 3)
-#     assert data.test_neg_edge_index.size() == (2, 3)
-#     assert data.train_pos_edge_index.size() == (2, 5)
-#     assert data.train_neg_adj_mask.size() == (11, 11)
-#     assert data.train_neg_adj_mask.sum().item() == (11**2 - 11) / 2 - 4 - 6 - 5
-
-#     z = torch.randn(11, 16)
-#     loss = model.recon_loss(z, data.train_pos_edge_index)
-#     assert loss.item() > 0
-
-#     auc, ap = model.test(z, data.val_pos_edge_index, data.val_neg_edge_index)
-#     assert auc >= 0 and auc <= 1 and ap >= 0 and ap <= 1
