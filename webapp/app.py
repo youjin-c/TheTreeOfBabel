@@ -1,33 +1,30 @@
 import json
 import sys,os
+
 from flask import Flask, render_template
-import pandas as pd
 
 app = Flask(__name__)
 
 def datalist(path):
-    for entry in sorted(os.scandir(path), key=lambda x: (x.is_dir(), x.name)):
-        print(entry)
-    #     if entry.name.split('.')[0] .isdigit():
-    #         with open(entry,'rt') as jsonfile:
-    #             jsons = json.load(jsonfile)
-    #             x = torch.tensor(jsons['x'], dtype=torch.float)
-    #             edge_index = torch.tensor(jsons['edge_index'],dtype=torch.long)
-    #             data = Data(x=x, edge_index=edge_index)# print(entry.name.split('.')[0],data)
-    #             data_list.append(data)
-    #             filename_list.append(entry.name)
-    # return data_list,filename_list
+    cat = []
+    data = []
+    for i, folder in enumerate(sorted(os.scandir(path), key=lambda x: (x.is_dir(), x.name))):
+        cat.append(folder.name)
+        data.append([])
+        for j,files in enumerate(sorted(os.scandir(folder.path), key=lambda x: (x.is_dir(), x.name))):
+            with open(files.path,'rt') as onefile:
+                jsons =json.load(onefile)
+                data[i].append(jsons)
+    # print(data[0][0]['x'])
+    # print(data[0][0]['edge_index'])
+    return data
 
-path = "dataset"
-datalist(path)
+
+
 @app.route("/")
 def index():
-    df = pd.read_csv('data.csv').drop('Open', axis=1)
-    chart_data = df.to_dict(orient='records')
-    chart_data = json.dumps(chart_data, indent=2)
-    data = {'chart_data': chart_data}
+    data = datalist("static/dataset")
     return render_template("index.html", data=data)
-    # return render_template("index.html")
 
 
 if __name__ == "__main__":
